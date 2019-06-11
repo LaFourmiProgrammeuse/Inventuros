@@ -4,6 +4,7 @@
 class LoginPage;
 class MainMenuPage;
 class RegisterPage;
+class PassForgottenPage;
 
 #include <QMainWindow>
 #include <QStackedWidget>
@@ -14,6 +15,7 @@ class RegisterPage;
 #include "user.h"
 #include "loginpage.h"
 #include "mainmenupage.h"
+#include "passforgottenpage.h"
 
 namespace Ui {
 class Interface;
@@ -46,9 +48,10 @@ private:
 
     QStackedWidget *central_stacked_widget;
 
-    LoginPage *login_page;
-    RegisterPage *register_page;
-    MainMenuPage *main_menu_page;
+    LoginPage *login_page = nullptr;
+    RegisterPage *register_page = nullptr;
+    MainMenuPage *main_menu_page = nullptr;
+    PassForgottenPage *pass_forgotten_page = nullptr;
 
     //Les valeurs set ici ne seront valable que jusqu'à un redimensionnement d'un user
     int interface_width = 800;

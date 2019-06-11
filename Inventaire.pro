@@ -15,6 +15,7 @@ SOURCES += \
     loginpage.cpp \
     mainmenupage.cpp \
     mysqlcontroller.cpp \
+    passforgottenpage.cpp \
     registerpage.cpp \
     roundedrectwidget.cpp \
     xmlcontroller.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     loginpage.h \
     mainmenupage.h \
     mysqlcontroller.h \
+    passforgottenpage.h \
     registerpage.h \
     roundedrectwidget.h \
     xmlcontroller.h \
@@ -35,5 +37,6 @@ HEADERS += \
 FORMS += \
     loginpage.ui \
     mainmenupage.ui \
+    passforgottenpage.ui \
     registerpage.ui \
     interface.ui

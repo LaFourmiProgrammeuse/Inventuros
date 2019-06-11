@@ -8,10 +8,15 @@ LoginPage::LoginPage(QWidget *parent, Interface *interface, User *user) :
     qDebug() << "Constructor LoginPage";
 
     ui->setupUi(this);
+
     this->user = user;
     this->interface = interface;
 
     LoadUserXmlSavedData();
+
+    //On initialise une connection avec la bdd
+    mysql_controller = new MysqlController;
+    mysql_controller->InitBddConnection("localhost", "inventuros", "antoine", "151172");
 
     if(first_connection == false){
 
@@ -79,9 +84,6 @@ void LoginPage::LoadUserXmlSavedData(){
 
 void LoginPage::LoadUserProfile(){
 
-    mysql_controller = new MysqlController;
-    mysql_controller->InitBddConnection("localhost", "inventuros", "antoine", "151172");
-
     sql::PreparedQuery *query = mysql_controller->CreatePreparedQuery("SELECT username FROM users WHERE id=?");
 
     query->setString(1, user_id.toStdString());
@@ -102,6 +104,8 @@ void LoginPage::InitGraphicalComponent(){
     ui->label_error->setVisible(false);
 
 }
+
+    /* SLOTS */
 
 void LoginPage::on_button_connect_clicked()
 {
@@ -124,12 +128,22 @@ void LoginPage::on_button_connect_clicked()
 
     sql::ResultSet *q_result = query->executeQuery();
 
+    if(q_result == nullptr){
+        std::cout << "Une requête mysql n'a rien renvoyé" << std::endl;
+        return;
+    }
+
     if(!q_result->next()){
 
         sql::PreparedQuery *query_2 = mysql_controller->CreatePreparedQuery("SELECT username FROM users WHERE username=?");
         query_2->setString(1, login_name);
 
         sql::ResultSet *q_result_2 = query_2->executeQuery();
+
+        if(q_result_2 == nullptr){
+            std::cout << "Une requête mysql n'a rien renvoyé" << std::endl;
+            return;
+        }
 
         QString error;
         if(!q_result_2->next()){
@@ -145,6 +159,7 @@ void LoginPage::on_button_connect_clicked()
         delete query_2;
         delete q_result_2;
     }
+
     delete query;
     delete q_result;
 
@@ -154,4 +169,10 @@ void LoginPage::on_button_connect_clicked()
 void LoginPage::on_button_no_already_account_clicked()
 {
     interface->SetInterfacePageIndex(1);
+}
+
+void LoginPage::on_button_pass_forgotten_clicked()
+{
+    interface->SetInterfacePageIndex(2);
+
 }

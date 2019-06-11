@@ -41,6 +41,8 @@ private slots:
 
     void on_button_no_already_account_clicked();
 
+    void on_button_pass_forgotten_clicked();
+
 private:
     Ui::LoginPage *ui;
 
